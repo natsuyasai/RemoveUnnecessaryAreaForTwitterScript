@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitterの不要領域削除
 // @namespace    https://github.com/natsuyasai/
-// @version      0.2
+// @version      0.3
 // @description 投稿欄とサイドバーをメインタブ以外で非表示にする
 // @author       natsuyasai
 // @match        https://twitter.com
@@ -13,14 +13,29 @@
 // @license MIT
 // ==/UserScript==
 
-const EnableTabName = 'main';
+const EnableTabName = ['フォロー中', 'main'];
 
+/**
+ * 有効なURLか
+ * @return {boolean} 有効なURLか
+ */
+function isEnableURL() {
+  if (location.href === 'https://twitter.com/' ||
+    location.href.indexOf('https://twitter.com/home') >= 0 ||
+    location.href.indexOf('https://twitter.com/notifications') >= 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
 /**
  * 有効なタブか
  * @return {boolean} 有効なタブか
  */
-function isEnabledTab() {
-  // aタグの中からタグ要素かつ現在アクティブになっている要素を取得し、クリックイベントを発火させる
+function isEnableTab() {
+  if (!isEnableURL()) {
+    return true;
+  }
   const tab = document.getElementsByTagName('a');
   for (let i = 0; i < tab.length; i++) {
     const elem = tab[i];
@@ -32,8 +47,13 @@ function isEnabledTab() {
     if (!isSelectedTabElement) {
       continue;
     }
-    if (elem.children[0].children[0].children[0].textContent === EnableTabName) {
-      return true;
+    if (elem.children.length > 0 &&
+      elem.children[0].children.length > 0 &&
+      elem.children[0].children[0].children.length > 0) {
+      const tabName = elem.children[0].children[0].children[0].textContent;
+      if (EnableTabName.some(name => name === tabName)) {
+        return true;
+      }
     }
   }
   return false;
@@ -68,7 +88,7 @@ function watchURLChange() {
   }, 500);
   const observer = new MutationObserver(debounced);
   const mainElement = document.getElementsByTagName('main');
-  const config = {childList: true, subtree: true};
+  const config = { childList: true, subtree: true };
   if (mainElement.length > 0) {
     observer.observe(mainElement[0], config);
   } else {
@@ -98,7 +118,7 @@ function changeTweetInputVisibility() {
   if (inputRootElement === null) {
     return;
   }
-  if (isEnabledTab()) {
+  if (isEnableTab()) {
     inputRootElement.style.display = 'initial';
   } else {
     inputRootElement.style.display = 'none';
@@ -125,14 +145,15 @@ function changeSidebarVisibility() {
   if (sidebarElement === null) {
     return;
   }
-  if (isEnabledTab()) {
+  if (isEnableTab()) {
     sidebarElement.style.display = 'initial';
   } else {
     sidebarElement.style.display = 'none';
   }
 }
 
-(function() {
+
+(function () {
   'use strict';
   changeTweetInputVisibility();
   changeSidebarVisibility();
