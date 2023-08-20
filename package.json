@@ -1,0 +1,24 @@
+{
+  "name": "removeunnecessaryareafortwitter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "RemoveArea.user.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/natsuyasai/RemoveUnnecessaryAreaForTwitterScript.git"
+  },
+  "author": "natsuyasai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/natsuyasai/RemoveUnnecessaryAreaForTwitterScript/issues"
+  },
+  "homepage": "https://github.com/natsuyasai/RemoveUnnecessaryAreaForTwitterScript#readme",
+  "devDependencies": {
+    "eslint": "^8.47.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.2"
+  }
+}
