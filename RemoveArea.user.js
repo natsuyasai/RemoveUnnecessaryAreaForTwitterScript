@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitterの不要領域削除
 // @namespace    https://github.com/natsuyasai/
-// @version      0.3
+// @version      0.4
 // @description 投稿欄とサイドバーをメインタブ以外で非表示にする
 // @author       natsuyasai
 // @match        https://x.com
