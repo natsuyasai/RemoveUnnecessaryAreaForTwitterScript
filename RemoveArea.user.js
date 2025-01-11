@@ -4,9 +4,9 @@
 // @version      0.3
 // @description 投稿欄とサイドバーをメインタブ以外で非表示にする
 // @author       natsuyasai
-// @match        https://twitter.com
-// @match        https://twitter.com/notifications
-// @match        https://twitter.com/home
+// @match        https://x.com
+// @match        https://x.com/notifications
+// @match        https://x.com/home
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
 // @supportURL   https://github.com/natsuyasai/RemoveUnnecessaryAreaForTwitterScript/
@@ -20,9 +20,9 @@ const EnableTabName = ['フォロー中', 'main'];
  * @return {boolean} 有効なURLか
  */
 function isEnableURL() {
-  if (location.href === 'https://twitter.com/' ||
-    location.href.indexOf('https://twitter.com/home') >= 0 ||
-    location.href.indexOf('https://twitter.com/notifications') >= 0) {
+  if (location.href === 'https://x.com/' ||
+    location.href.indexOf('https://x.com/home') >= 0 ||
+    location.href.indexOf('https://x.com/notifications') >= 0) {
     return true;
   } else {
     return false;
