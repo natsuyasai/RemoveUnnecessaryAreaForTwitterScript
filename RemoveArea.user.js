@@ -12,7 +12,7 @@
 // @supportURL   https://github.com/natsuyasai/RemoveUnnecessaryAreaForTwitterScript/
 // @license MIT
 // ==/UserScript==
-
+// @ts-check
 const EnableTabName = ['フォロー中', 'main'];
 
 /**
@@ -47,10 +47,9 @@ function isEnableTab() {
     if (!isSelectedTabElement) {
       continue;
     }
-    if (elem.children.length > 0 &&
-      elem.children[0].children.length > 0 &&
-      elem.children[0].children[0].children.length > 0) {
-      const tabName = elem.children[0].children[0].children[0].textContent;
+    const tabName = getTabName(elem.children);
+    debugger
+    if (tabName !== null) {
       if (EnableTabName.some(name => name === tabName)) {
         return true;
       }
@@ -60,12 +59,34 @@ function isEnableTab() {
 }
 
 /**
+ * @param {HTMLCollection} children
+ * @return {string|null}
+ */
+function getTabName(children) {
+  for (const child of children) {
+    if (child.tagName.toLowerCase() === 'span') {
+      return child.textContent;
+    }
+  }
+  for (const child of children) {
+    const text = getTabName(child.children);
+    if (text !== null) {
+      return text;
+    }
+  }
+  return null;
+}
+
+/**
  * debounce
  * @param {*} func 実行する関数
  * @param {number} delay 遅延時間
  * @return {*} debounce処理
  */
 function debounce(func, delay) {
+  /**
+   * @type {number | undefined}
+   */
   let timerId;
 
   return function (...args) {
