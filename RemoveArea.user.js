@@ -99,10 +99,11 @@ function debounce(func, delay) {
    */
   let timerId;
 
-  return function (...args) {
+  return function (/** @type {any} */ ...args) {
     clearTimeout(timerId);
 
     timerId = setTimeout(() => {
+      // @ts-ignore
       func.apply(this, args);
     }, delay);
   };
