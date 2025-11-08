@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Twitterの不要領域削除
 // @namespace    https://github.com/natsuyasai/
-// @version      0.4
+// @version      0.5
 // @description 投稿欄とサイドバーをメインタブ以外で非表示にする
 // @author       natsuyasai
 // @match        https://x.com
@@ -22,11 +22,21 @@ const EnableTabName = ['フォロー中', 'main'];
 function isEnableURL() {
   if (location.href === 'https://x.com/' ||
     location.href.indexOf('https://x.com/home') >= 0 ||
-    location.href.indexOf('https://x.com/notifications') >= 0) {
+    location.href.indexOf('https://x.com/notifications') >= 0 ||
+    isImageOpen(location.href)
+  ) {
     return true;
   } else {
     return false;
   }
+}
+
+/**
+ * 画像が開かれているか
+ * @param {string} href 
+ */
+function isImageOpen(href) {
+  return href.indexOf('/photo/') >= 0;
 }
 /**
  * 有効なタブか
